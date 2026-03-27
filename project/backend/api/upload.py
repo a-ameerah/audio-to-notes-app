@@ -7,6 +7,16 @@ from project.backend.services.metrics_service import update_metrics
 
 router = APIRouter()
 
+@router.get("/uploads")
+def get_uploads():
+    uploads = supabase.table("uploads").select("*").order("upload_time", desc=True).execute()
+    return {"success": True, "data": uploads.data}
+
+@router.get("/uploads/{file_id}")
+def get_upload(file_id: str):
+    upload = supabase.table("uploads").select("*").eq("id", file_id).execute()
+    return {"success": True, "data": upload.data}
+
 @router.post("/upload-audio")
 async def upload_audio(file: UploadFile = File(...)):
     allowed = ['.mp3', '.wav', '.m4a', '.ogg', '.flac']
