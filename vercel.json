@@ -1,0 +1,7 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "cd project/frontend/scribe && npm install && npm run build",
+  "outputDirectory": "project/frontend/scribe/.next",
+  "installCommand": "cd project/frontend/scribe && npm install",
+  "devCommand": "cd project/frontend/scribe && npm run dev"
+}
