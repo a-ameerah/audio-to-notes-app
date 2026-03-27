@@ -13,6 +13,18 @@ router = APIRouter()
 
 model = whisper.load_model("base")
 
+@router.get("/transcripts")
+def get_transcripts():
+    transcripts = supabase.table("transcripts").select("*, uploads(filename, file_size, upload_time)").order("created_at", desc=True).execute()
+    return {"success": True, "data": transcripts.data}
+
+@router.get("/transcripts/{transcript_id}")
+def get_transcript(transcript_id: str):
+    transcript = supabase.table("transcripts").select("*, uploads(filename, file_size, upload_time)").eq("id", transcript_id).execute()
+    return {"success": True, "data": transcript.data}
+
+
+
 @router.post("/transcribe")
 def transcribe_audio(request: TranscribeRequest):
 
